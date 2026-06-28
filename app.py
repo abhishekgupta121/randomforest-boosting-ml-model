@@ -8,7 +8,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
+import joblib
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -156,8 +156,12 @@ def kpi(label, value, delta="", color="#fb923c"):
 # ══════════════════════════════════════════════════════════
 @st.cache_resource(show_spinner=False)
 def load_model():
-    with open("random_forest_model.pkl", "rb") as f:
-        return pickle.load(f)
+    try:
+        return joblib.load("random_forest_model.pkl")
+    except Exception:
+        import pickle
+        with open("random_forest_model.pkl", "rb") as f:
+            return pickle.load(f)
 
 try:
     model = load_model()
@@ -165,7 +169,6 @@ try:
 except Exception as e:
     MODEL_OK = False
     MODEL_ERR = str(e)
-
 
 # ══════════════════════════════════════════════════════════
 #  SYNTHETIC DATA (for visualisations)
