@@ -8,12 +8,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-try:
-    import joblib
-except ModuleNotFoundError:
-    import subprocess, sys
-    subprocess.run([sys.executable, "-m", "pip", "install", "joblib"], check=True)
-    import joblib
+import joblib
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
